@@ -4,6 +4,8 @@ import expressLayout from 'express-ejs-layouts';
 import db from './config/mongoose.js';
 // import passport from 'passport';
 // import passportJWT from './config/passport-jwt-strategy.js';
+import flash from 'connect-flash';
+import { setFlash } from './config/middleware.js';
 
 const PORT = 8000;
 const app = express();
@@ -23,6 +25,9 @@ app.set('views', './views');
 // Initialize Passport
 // app.use(passport.initialize());
 
+// noty js and connect-flash for notification
+app.use(flash());
+app.use(setFlash);
 // Redirected to folder routes
 app.use('/', routes);
 
