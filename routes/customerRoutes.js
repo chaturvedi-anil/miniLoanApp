@@ -1,8 +1,21 @@
 import { Router } from 'express';
-import { signIn, signUp } from '../controllers/customerController.js';
+import passport from 'passport';
+import { signIn, signUp, createCustomer, createSession, customerDashboard } from '../controllers/customerController.js';
 const customerRouter = Router();
 
 customerRouter.get('/sign-in', signIn);
 customerRouter.get('/sign-up', signUp);
+customerRouter.get('/dashboard', customerDashboard);
 
+customerRouter.post('/create', createCustomer);
+customerRouter.post
+(   
+    '/create-session', 
+    passport.authenticate('customer-local', 
+    {
+        failureRedirect: '/customer/sign-in',
+        failureFlash: true,
+    })
+    ,createSession
+);
 export default customerRouter;

@@ -15,7 +15,7 @@ export function signUp(req, res)
     });
 }
 
-// creating new users
+// creating new admin
 export async function createAdmin(req, res)
 {
     try
