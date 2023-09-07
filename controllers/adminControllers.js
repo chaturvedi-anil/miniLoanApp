@@ -1,4 +1,6 @@
 import Admin from '../models/admin.js';
+import bcrypt from 'bcrypt';
+
 
 export function signIn(req, res)
 {
@@ -30,7 +32,16 @@ export async function createAdmin(req, res)
             }
             else
             {
-                let newAdmin = await Admin.create(req.body);
+                const saltRounds = 10; // Number of salt rounds for bcrypt hashing
+                const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+                // Create a new admin with the hashed password
+                let newAdmin = await Admin.create(
+                {
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: hashedPassword, // Store the hashed password
+                });
                 
                 req.flash('success', 'New Admin registered');
                 return res.redirect('/admin/sign-in');
@@ -48,4 +59,14 @@ export async function createAdmin(req, res)
         console.log('Error in creating admin :', err);
         return res.send('Internal Server Error');
     }
+}
+
+export function createSession(req, res)
+{
+    return res.redirect('/admin/dashboard');
+}
+
+export function adminDashboard(req, res)
+{
+    return res.send('Dashboard');
 }

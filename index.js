@@ -3,7 +3,8 @@ import routes from './routes/index.js'
 import expressLayout from 'express-ejs-layouts';
 import session from 'express-session';
 import db from './config/mongoose.js';
-// import passport from 'passport';
+import passport from 'passport';
+import passportLocal from './config/passport-local-strategy.js';
 // import passportJWT from './config/passport-jwt-strategy.js';
 import flash from 'connect-flash';
 import { setFlash } from './config/middleware.js';
@@ -32,7 +33,11 @@ app.use(session
 }));
 
 // Initialize Passport
-// app.use(passport.initialize());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set authenticated user in locals for views
+app.use(passportLocal.setAuthenticatedUser);
 
 // Initialize connect-flash
 app.use(flash());
