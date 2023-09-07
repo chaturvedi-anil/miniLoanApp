@@ -27,7 +27,6 @@ const repaymentSchema = new Schema(
     },
 }, 
 {
-
     timestamps: true
 });
 

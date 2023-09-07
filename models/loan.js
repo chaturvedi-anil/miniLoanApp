@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const loanSchema = new Schema(
 {
-    user: 
+    customer: 
     { 
         type: Schema.Types.ObjectId, 
-        ref: 'User', 
+        ref: 'Customer', 
         required: true 
     },
     amount: 
