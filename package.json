@@ -1,0 +1,11 @@
+{
+  "name": "miniloanapp",
+  "version": "1.0.0",
+  "description": "This is fullstack miniLoanApp project for internship ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anil Chaturvedi",
+  "license": "ISC"
+}
