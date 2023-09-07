@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from './routes/index.js'
 import expressLayout from 'express-ejs-layouts';
+import session from 'express-session';
 import db from './config/mongoose.js';
 // import passport from 'passport';
 // import passportJWT from './config/passport-jwt-strategy.js';
@@ -22,12 +23,21 @@ app.set('layout extractScripts', true);
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// use session middileware
+app.use(session
+({
+    secret: 'ZNMDVNqWsy', // Replace with a strong, random string
+    resave: false, // Do not save the session if it's not modified
+    saveUninitialized: false, // Do not save uninitialized sessions
+}));
+
 // Initialize Passport
 // app.use(passport.initialize());
 
-// noty js and connect-flash for notification
+// Initialize connect-flash
 app.use(flash());
 app.use(setFlash);
+
 // Redirected to folder routes
 app.use('/', routes);
 
