@@ -9,7 +9,7 @@ export async function loanDashboard(req, res)
         {
             let approvedLoanList = await Loan.find({ customer: req.params.id, status: 'approved' });
             let allLoanList = await Loan.find({ customer: req.params.id});
-            return res.render('loan_Dashboard',
+            return res.render('partials/customerPartials/customerLoanDashboard',
             {
                 title: "Loan Dashboad",
                 approvedLoanList : approvedLoanList,
@@ -40,15 +40,20 @@ export async function applyForLoan(req, res)
             const currentDate = new Date();
             const formattedDate = currentDate.toLocaleDateString();
 
-            const loan = await Loan.create(
+            const loanData = await Loan.create(
                 {
                     ...req.body,
                     appliedDate: formattedDate // Set appliedDate to the current date (formatted as YYYY-MM-DD)
                 }
             );
 
-            if (loan) 
+            if (loanData) 
             {
+                // this query will push loan data in customer db
+                await Customer.findByIdAndUpdate(
+                    req.params.id,
+                    {$push:{loans: loanData}},
+                );
                 req.flash('success', "Loan Application Successfully Submitted");
                 return res.redirect(`/customer/loans/dashboard/${req.params.id}`);
             } 

@@ -88,7 +88,11 @@ export function adminDashboard(req, res)
 {
     try
     {
-        return res.render('admin_Dashboard',{title:"Admin Dashboard"});
+        if(req.user)
+        {
+            return res.render('admin_Dashboard',{title:"Admin Dashboard"});
+        }
+        
     }
     catch(error)
     {
