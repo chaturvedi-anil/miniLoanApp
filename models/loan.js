@@ -32,6 +32,11 @@ const loanSchema = new Schema(
         enum: ['PENDING', 'APPROVED', 'PAID'],
         default: 'PENDING',
     },
+    appliedDate:
+    {
+        type: String,
+        required: true
+    }
 },
 {
     timestamps: true
