@@ -1,36 +1,23 @@
 function toggleDashboards(selectedDashboard) 
 {
-    let approvedLoan = document.getElementById("approved-loan");
-    let pendingLoan = document.getElementById("pending-loan");
-    let paidLoan = document.getElementById("paid-loan");
-    let rejectedLoan = document.getElementById("rejected-loan");
+    // Created an object to store dashboard elements by their IDs
+    const dashboards = 
+    {
+        'approved-loan': document.getElementById("approved-loan"),
+        'pending-loan': document.getElementById("pending-loan"),
+        'paid-loan': document.getElementById("paid-loan"),
+        'rejected-loan': document.getElementById("rejected-loan")
+    };
 
-    if (selectedDashboard === 'approved-loan') 
+    // Hide all dashboards by default
+    for (const dashboardId in dashboards) 
     {
-        approvedLoan.style.display = 'block';
-        pendingLoan.style.display = 'none';
-        paidLoan.style.display = 'none';
-        rejectedLoan.style.display = 'none';
-    } 
-    else if (selectedDashboard === 'pending-loan') 
-    {
-        approvedLoan.style.display = 'none';
-        pendingLoan.style.display = 'block';
-        paidLoan.style.display = 'none';
-        rejectedLoan.style.display = 'none';
+        dashboards[dashboardId].style.display = 'none';
     }
-    else if (selectedDashboard === 'paid-loan') 
+
+    // Display the selected dashboard, if it exists
+    if (dashboards[selectedDashboard]) 
     {
-        approvedLoan.style.display = 'none';
-        pendingLoan.style.display = 'none';
-        paidLoan.style.display = 'block';
-        rejectedLoan.style.display = 'none';
-    }
-    else if (selectedDashboard === 'rejected-loan') 
-    {
-        approvedLoan.style.display = 'none';
-        pendingLoan.style.display = 'none';
-        paidLoan.style.display = 'none';
-        rejectedLoan.style.display = 'block';
+        dashboards[selectedDashboard].style.display = 'block';
     }
 }

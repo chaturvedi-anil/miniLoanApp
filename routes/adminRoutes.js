@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
+import loanRouter from './loanRoutes.js';
 import 
 { 
     signIn, 
@@ -8,15 +9,12 @@ import
     createSession, 
     adminDashboard, 
     destroySession,
-    getAllLoansDetails
  } from '../controllers/adminControllers.js';
 const adminRouter = Router();
 
 adminRouter.get('/sign-in', signIn);
 adminRouter.get('/sign-up', signUp);
 adminRouter.get('/dashboard', adminDashboard);
-adminRouter.get('/all-loans/:id', getAllLoansDetails);
-
 
 adminRouter.post('/create', createAdmin);
 adminRouter.post
@@ -31,4 +29,8 @@ adminRouter.post
 );
 
 adminRouter.get('/destroy-session', destroySession);
+
+// all admin realated loan routes
+adminRouter.use('/loans', loanRouter);
+
 export default adminRouter;

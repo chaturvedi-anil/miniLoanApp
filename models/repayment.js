@@ -9,10 +9,21 @@ const repaymentSchema = new Schema(
         ref: 'Loan', 
         required: true 
     },
-    amount: 
+    totalAmount: 
     { 
         type: Number, 
         required: true 
+    },
+    remaingTerm:
+    {
+        type: Number,
+        required: true
+    },
+    completedTerm:
+    {
+        type: Number,
+        required: true,
+        default: 0,
     },
     status: 
     {
@@ -22,7 +33,7 @@ const repaymentSchema = new Schema(
     },
     paymentDate: 
     { 
-        type: Date, 
+        type: String, 
         required: true 
     },
 }, 

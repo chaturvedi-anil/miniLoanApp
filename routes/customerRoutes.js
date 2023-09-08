@@ -4,17 +4,9 @@ import loanRoutes from './loanRoutes.js';
 import { signIn, signUp, createCustomer, createSession, customerDashboard,destroySession } from '../controllers/customerController.js';
 const customerRouter = Router();
 
-const checkAuthentication = (req, res)=>{
-    if(req.isAuthenticated())
-    {
-        return next();
-    }
-    res.redirect('/customer/sign-in');
-}
-
 customerRouter.get('/sign-in', signIn);
 customerRouter.get('/sign-up', signUp);
-customerRouter.get('/dashboard', checkAuthentication,customerDashboard);
+customerRouter.get('/dashboard',customerDashboard);
 
 customerRouter.post('/create', createCustomer);
 customerRouter.post
@@ -30,5 +22,5 @@ customerRouter.post
 
 customerRouter.get('/destroy-session', destroySession);
 
-customerRouter.use('/loans',checkAuthentication ,loanRoutes);
+customerRouter.use('/loans' ,loanRoutes);
 export default customerRouter;
