@@ -3,12 +3,23 @@ import bcrypt from 'bcrypt';
 
 export function signIn(req, res)
 {
-    return res.render('customer_SignIn',{
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/customer/dashboard');    
+    }
+
+    return res.render('customer_SignIn',
+    {
         title: 'Customer SignIn'
     });
 }
 export function signUp(req, res)
 {
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/customer/dashboard');    
+    }
+
     return res.render('customer_SignUp',{
         title: 'Customer SignUp'
     });
@@ -56,16 +67,51 @@ export async function createCustomer(req, res)
     catch(err)
     {
         console.log('Error in creating customer :', err);
-        return res.send('Internal Server Error');
+        return res.status(500).send('Internal Server Error');
     }
 }
 
 export function createSession(req, res)
 {
-    return res.redirect('/customer/dashboard');
+    req.flash('success', 'Signed In Successfully');
+    return res.status(200).redirect('/customer/dashboard');
 }
 
-export function customerDashboard(req, res)
+export async function customerDashboard(req, res)
 {
-    return res.send('Dashboard');
+    try 
+    {
+        if(req.user)
+        {
+            let customer = await Customer.findOne({email: req.user.email});
+            
+            return res.render('customer_Dashboard',
+            {
+                title: "Customer Dashboad",
+                customer: customer
+            });
+        }
+        else
+        {
+            return res.status(404).redirect('/customer//sign-in');
+        }
+    }
+    catch(error)
+    {
+        console.log('Error in customer dashboard controller : ',error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+// destroy session 
+export function destroySession(req, res)
+{
+    req.logout((err)=>
+    {
+        if(err) console.log("Error in signOut ", err);
+
+        // console.log('SignOut successfully');
+        req.flash('success', 'SignOut successfully');
+        return res.redirect('/');
+    });
 }

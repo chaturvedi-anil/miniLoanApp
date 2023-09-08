@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { signIn, signUp, createCustomer, createSession, customerDashboard } from '../controllers/customerController.js';
+import { signIn, signUp, createCustomer, createSession, customerDashboard,destroySession } from '../controllers/customerController.js';
 const customerRouter = Router();
 
 customerRouter.get('/sign-in', signIn);
@@ -18,4 +18,6 @@ customerRouter.post
     })
     ,createSession
 );
+
+customerRouter.get('/destroy-session', destroySession);
 export default customerRouter;
