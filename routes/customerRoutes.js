@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
+import loanRoutes from './loanRoutes.js';
 import { signIn, signUp, createCustomer, createSession, customerDashboard,destroySession } from '../controllers/customerController.js';
 const customerRouter = Router();
 
@@ -20,4 +21,6 @@ customerRouter.post
 );
 
 customerRouter.get('/destroy-session', destroySession);
+
+customerRouter.use('/loans', loanRoutes);
 export default customerRouter;
