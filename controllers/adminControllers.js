@@ -4,12 +4,21 @@ import bcrypt from 'bcrypt';
 
 export function signIn(req, res)
 {
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/admin/dashboard');    
+    }
     return res.render('admin_SignIn',{
         title: 'Admin SignIn'
     });
 }
 export function signUp(req, res)
 {
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/admin/dashboard');    
+    }
+
     return res.render('admin_SignUp',{
         title: 'Admin SignUp'
     });
@@ -43,8 +52,16 @@ export async function createAdmin(req, res)
                     password: hashedPassword, // Store the hashed password
                 });
                 
-                req.flash('success', 'New Admin registered');
-                return res.redirect('/admin/sign-in');
+                if(newAdmin)
+                {
+                    req.flash('success', 'New Admin registered');
+                    return res.redirect('/admin/sign-in');
+                }
+                else
+                {
+                    req.flash('error', 'Error In Admin registering');
+                    return res.redirect('back');
+                }
             }
         }
         else
@@ -63,10 +80,33 @@ export async function createAdmin(req, res)
 
 export function createSession(req, res)
 {
+    req.flash('success', 'Signed In Successfully');
     return res.redirect('/admin/dashboard');
 }
 
 export function adminDashboard(req, res)
 {
-    return res.send('Dashboard');
+    try
+    {
+        return res.render('admin_Dashboard',{title:"Admin Dashboard"});
+    }
+    catch(error)
+    {
+        console.log('Error in admindashboard controller :', error);
+        return res.send('Internal Server Error');
+    }
+
+}
+
+// destroy session 
+export function destroySession(req, res)
+{
+    req.logout((err)=>
+    {
+        if(err) console.log("Error in signOut ", err);
+
+        // console.log('SignOut successfully');
+        req.flash('success', 'SignOut successfully');
+        return res.redirect('/');
+    });
 }

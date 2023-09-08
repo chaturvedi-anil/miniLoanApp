@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { signIn, signUp, createAdmin, createSession, adminDashboard } from '../controllers/adminControllers.js';
+import { signIn, signUp, createAdmin, createSession, adminDashboard, destroySession } from '../controllers/adminControllers.js';
 const adminRouter = Router();
 
 adminRouter.get('/sign-in', signIn);
@@ -19,4 +19,5 @@ adminRouter.post
     ,createSession
 );
 
+adminRouter.get('/destroy-session', destroySession);
 export default adminRouter;
