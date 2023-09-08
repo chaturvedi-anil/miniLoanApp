@@ -14,11 +14,11 @@
                 <li class="nav-item" onclick="toggleDashboards('pending-loan')">
                     <a class="nav-link">Pending Loan Request</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link">Rejected Loan Request</a>
-                </li>
-                <li class="nav-item" id="paid-loan">
+                <li class="nav-item" onclick="toggleDashboards('paid-loan')">
                     <a class="nav-link">Paid Loans</a>
+                </li>
+                <li class="nav-item" onclick="toggleDashboards('rejected-loan')">
+                    <a class="nav-link">Rejected Loan Requests</a>
                 </li>
             </ul>
         </div>
@@ -56,10 +56,73 @@
             </div>            
         </div>
 
-        <!-- Show Pending Loan Request -->
+        
+        <!-- Show pending Loans -->
         <div class="main-content" id="pending-loan">
             <div class="container">
-                <h1>All Pending Request For Loan</h1>
+                <h1>All Pending Requests For Loan</h1>
+                <div class="approved-loans">
+                    <table class="loan-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Loan Amount</th>
+                                <th>Loan Term</th>
+                                <th>Loan Status</th>
+                                <th>Applied Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let loanList of allLoanList) { %>
+                                <tr class="loan-details">
+                                    <td><%= loanList.customer.name %></td>
+                                    <td><%= loanList.amount %> </td>
+                                    <td><%= loanList.term %> </td>
+                                    <td><%= loanList.status %> </td>
+                                    <td><%= loanList.appliedDate%> </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+
+        <!-- Show paid loan requests -->
+        <div class="main-content" id="paid-loan">
+            <div class="container">
+                <h1>All Paid Loan</h1>
+                <div class="approved-loans">
+                    <table class="loan-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Loan Amount</th>
+                                <th>Loan Term</th>
+                                <th>Loan Status</th>
+                                <th>Applied Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let loanList of allLoanList) { %>
+                                <tr class="loan-details">
+                                    <td><%= loanList.customer.name %></td>
+                                    <td><%= loanList.amount %> </td>
+                                    <td><%= loanList.term %> </td>
+                                    <td><%= loanList.status %> </td>
+                                    <td><%= loanList.appliedDate%> </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+
+        <!-- Show rejected requests -->
+        <div class="main-content" id="rejected-loan">
+            <div class="container">
+                <h1>All Rejected Loan Requests</h1>
                 <div class="approved-loans">
                     <table class="loan-table">
                         <thead>

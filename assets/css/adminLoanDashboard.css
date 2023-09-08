@@ -8,7 +8,14 @@
 {
     display: none;
 }
-
+#paid-loan
+{
+    display: none;
+}
+#rejected-loan
+{
+    display: none;
+}
 /* list of loan */
 .container
 {
