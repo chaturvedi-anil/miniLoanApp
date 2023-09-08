@@ -1,11 +1,22 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { signIn, signUp, createAdmin, createSession, adminDashboard, destroySession } from '../controllers/adminControllers.js';
+import 
+{ 
+    signIn, 
+    signUp, 
+    createAdmin, 
+    createSession, 
+    adminDashboard, 
+    destroySession,
+    getAllLoansDetails
+ } from '../controllers/adminControllers.js';
 const adminRouter = Router();
 
 adminRouter.get('/sign-in', signIn);
 adminRouter.get('/sign-up', signUp);
 adminRouter.get('/dashboard', adminDashboard);
+adminRouter.get('/all-loans/:id', getAllLoansDetails);
+
 
 adminRouter.post('/create', createAdmin);
 adminRouter.post

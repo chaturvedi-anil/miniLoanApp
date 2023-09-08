@@ -1,4 +1,5 @@
 import Admin from '../models/admin.js';
+import Loan from '../models/loan.js';
 import bcrypt from 'bcrypt';
 
 
@@ -90,7 +91,14 @@ export function adminDashboard(req, res)
     {
         if(req.user)
         {
-            return res.render('admin_Dashboard',{title:"Admin Dashboard"});
+            return res.render('admin_Dashboard',
+            {
+                title: "Admin Dashboad",
+            });
+        }
+        else
+        {
+            return res.status(404).redirect('/admin/sign-in');
         }
         
     }
@@ -100,6 +108,42 @@ export function adminDashboard(req, res)
         return res.send('Internal Server Error');
     }
 
+}
+
+// /get all loans details
+export async function getAllLoansDetails(req, res)
+{
+    try 
+    {
+        if(req.params.id)
+        {
+            let allLoanList = await Loan.find()
+            .populate('customer', 'name');
+            let approvedLoanList = await Loan.find({status: 'approved' });
+            let pendingLoanList = await Loan.find({status: 'pending' });
+            let paidLoanList = await Loan.find({ status: 'pending' });
+            let rejectedLoanList = await Loan.find({ status: 'pending' });
+            return res.render('partials/adminPartials/adminLoanDashboard',
+            {
+                title: "Loan Dashboad",
+                allLoanList : allLoanList, //to be removed
+                approvedLoanList : approvedLoanList, 
+                pendingLoanList : pendingLoanList,
+                paidLoanList : paidLoanList,
+                rejectedLoanList : rejectedLoanList
+            });
+        }
+        else
+        {
+            req.flash('error', "Please Sign In");
+            return res.status(404).redirect('/admin/sign-in');
+        }
+    }
+    catch(error)
+    {
+        console.log('Error in loan dashboard controller : ',error);
+        return res.status(500).send("Internal Server Error");
+    }
 }
 
 // destroy session 

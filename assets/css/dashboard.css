@@ -49,16 +49,6 @@
     border-radius: 5px;
 }
 
-#customer-dashboard
-{
-    display: block;
-}
-
-#loan-dashboard
-{
-    display: none;
-}
-
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
     .main-container {

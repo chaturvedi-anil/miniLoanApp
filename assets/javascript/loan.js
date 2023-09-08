@@ -25,40 +25,9 @@ function toggleDashboards(selectedDashboard)
         customerDashboard.style.display = 'block';
         loanDashboard.style.display = 'none';
     } 
-    else if (selectedDashboard === 'loan-dashboard') {
+    else if (selectedDashboard === 'loan-dashboard') 
+    {
         customerDashboard.style.display = 'none';
         loanDashboard.style.display = 'block';
     }
 }
-// function showCustomerDashboard() 
-// {
-//     let customerDashboard = document.getElementById("customer-dashboard");
-//     console.log("ouside if ",customerDashboard);
-//     if (customerDashboard.style.display === 'none' || customerDashboard.style.display === '') 
-//     {
-//         customerDashboard.style.display = 'block';
-//         console.log("inside if ",customerDashboard);
-//     } 
-//     else 
-//     {
-//         customerDashboard.style.display = 'none';
-//         console.log("inside else ",customerDashboard);
-//     }
-// }
-
-// function showLoanHistory() 
-// {
-//     console.log('clicked');
-//     let loanDashboard = document.getElementById("loan-dashboard");
-//     console.log("outside if ",loanDashboard);
-//     if (loanDashboard.style.display === 'none' || loanDashboard.style.display === '') 
-//     {
-//         loanDashboard.style.display = 'block';
-//         console.log("inside if ",loanDashboard);
-//     } 
-//     else 
-//     {
-//         loanDashboard.style.display = 'none';
-//         console.log("inside else ",loanDashboard);
-//     }
-// }

@@ -82,18 +82,15 @@ export async function customerDashboard(req, res)
     try 
     {
         if(req.user)
-        {
-            let customer = await Customer.findOne({email: req.user.email});
-            
+        {   
             return res.render('customer_Dashboard',
             {
                 title: "Customer Dashboad",
-                user: customer
             });
         }
         else
         {
-            return res.status(404).redirect('/customer//sign-in');
+            return res.status(404).redirect('/customer/sign-in');
         }
     }
     catch(error)

@@ -4,11 +4,11 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <ul class="nav">
-                <li class="nav-item" onclick="">
-                    <a class="nav-link" href="/admin/dashboard/<%=user.id%>">Admin Profile</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Admin Profile</a>
                 </li>
-                <li class="nav-item" onclick="">
-                    <a class="nav-link" href="/admin/loandashboard/<%=user.id%>">Loan Dashboard</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/all-loans/<%=user.id%>">Loan Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/destroy-session">Sign Out</a>
@@ -17,15 +17,12 @@
         </div>
 
         <!-- Main Content -->
-        <!-- admin dashboard div Main Content -->
-        <div class="main-content" id="admin-dashboard">
+        <div class="main-content">
             <div class="container">
                 <h1>Admin Details</h1>
                 <p>Name: <%= user.name %></p>
                 <p>Email: <%= user.email %></p>
-            </div>           
+            </div>
         </div>
-
-        
     <% } %>
 </main>
