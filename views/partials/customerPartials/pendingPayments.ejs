@@ -3,17 +3,19 @@
     <div class="container">
         <h1>All Pending Payemnt List</h1>
         <div class="pendingPayment">
-            <div class="pending-payment-list">
-                <p> Customer Name : </p>
-                <p> Loan Amount : </p>
-                <p> Remaning Amount : </p>
-                <p> Total Term : </p>
-                <p> Remaning Term : </p>
-                <p> Complete Term : </p>
-                <p> Payment Status : </p>
-                <p> Next Payment Date : </p>
-                <p><a href="/customer/payments/loan-payment/:id">Pay EMI</a></p>
-            </div>
+            <% for(let payments of pendingPaymentList){ %> 
+                <div class="pending-payment-list">
+                    <p> Customer Name : <%= payments.loan.customer.name %> </p>
+                    <p> Loan Amount : <%= payments.totalAmount %> </p>
+                    <p> Remaning Amount : <%= payments.remaningAmount %> </p>
+                    <p> Total Term : <%= payments.totalTerm %></p>
+                    <p> Remaning Term : <%= payments.remaningTerm %></p>
+                    <p> Complete Term : <%= payments.completeTerm %> </p>
+                    <p> Payment Status : <%= payments.status %> </p>
+                    <p> Next Payment Date : <%= payments.paymentDate %> </p>
+                    <p><a href="/customer/payments/loan-payment/:id">Pay EMI</a></p>
+                </div>    
+            <% } %>
         </div>
     </div>            
 </div>

@@ -8,13 +8,48 @@ export async function loanDashboard(req, res)
     {
         if(req.params.id)
         {
+
             let approvedLoanList = await Loan.find({ customer: req.params.id, status: 'APPROVED' });
-            let allLoanList = await Loan.find({ customer: req.params.id});
+            let allLoanList = await Loan.find({ customer: req.params.id})
+            
+            // Extract the IDs of the customer's loans
+            const loanIds = allLoanList.map(loan => loan._id);
+
+            // Find payments with status 'PAID' for the customer
+            let paidPaymentList = await Payment.find({
+                status: 'PAID',
+                loan: { $in: loanIds } // Find payments associated with loans of this customer
+            })
+            .populate({
+                path: 'loan',
+                select: 'customer',
+                populate: { //populating the customer name of that loan
+                    path: 'customer',
+                    select: 'name'
+                }
+            });
+
+            let pendingPaymentList = await Payment.find({
+                status: 'PENDING',
+                loan: { $in: loanIds } // Find payments associated with loans of this customer
+            })
+            .populate({
+                path: 'loan',
+                select: 'customer',
+                populate: { //populating the customer name of that loan
+                    path: 'customer',
+                    select: 'name'
+                }
+            });
+            
+
             return res.render('partials/customerPartials/customerLoanDashboard',
             {
                 title: "Loan Dashboad",
-                approvedLoanList : approvedLoanList,
-                allLoanList: allLoanList
+                approvedLoanList,
+                allLoanList,
+                paidPaymentList,
+                pendingPaymentList
             });
         }
         else
@@ -166,9 +201,8 @@ export async function approveLoan(req, res)
                     loan: updatedLoan._id,
                     totalAmount: updatedLoan.amount,
                     remaningAmount: updatedLoan.amount,
-                    totalTearm: updatedLoan.term,
+                    totalTerm: updatedLoan.term,
                     remaningTerm: updatedLoan.term, // Use loan's term here
-                    completedTerm: 0,
                     paymentDate:nextPaymentDate
                 });
 

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const repaymentSchema = new Schema(
+const paymentSchema = new Schema(
 {
     loan: 
     { 
@@ -19,7 +19,7 @@ const repaymentSchema = new Schema(
         type: Number, 
         required: true
     },
-    totalTearm:
+    totalTerm:
     {
         type: Number, 
         required: true
@@ -33,6 +33,7 @@ const repaymentSchema = new Schema(
     {
         type: Number,
         required: true,
+        default: 0
     },
     status: 
     {
@@ -50,6 +51,6 @@ const repaymentSchema = new Schema(
     timestamps: true
 });
 
-const Repayment = mongoose.model('Repayment', repaymentSchema);
+const Payment = mongoose.model('Payment', paymentSchema);
 
-export default Repayment;
+export default Payment;
