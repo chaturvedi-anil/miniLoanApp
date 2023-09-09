@@ -85,7 +85,7 @@ export async function customerDashboard(req, res)
         {   
             return res.render('customer_Dashboard',
             {
-                title: "Customer Dashboad",
+                title: "Customer Dashboard",
             });
         }
         else

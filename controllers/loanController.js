@@ -8,9 +8,8 @@ export async function loanDashboard(req, res)
     {
         if(req.params.id)
         {
-
             let approvedLoanList = await Loan.find({ customer: req.params.id, status: 'APPROVED' });
-            let allLoanList = await Loan.find({ customer: req.params.id})
+            let allLoanList = await Loan.find({ customer: req.params.id});
             
             // Extract the IDs of the customer's loans
             const loanIds = allLoanList.map(loan => loan._id);
@@ -45,7 +44,7 @@ export async function loanDashboard(req, res)
 
             return res.render('partials/customerPartials/customerLoanDashboard',
             {
-                title: "Loan Dashboad",
+                title: "Customer Loan Dashboard",
                 approvedLoanList,
                 allLoanList,
                 paidPaymentList,
@@ -130,7 +129,7 @@ export async function getAllLoansDetails(req, res)
             // Find pending loans and populate customer names
             const pendingLoanList = await Loan.find({ status: 'PENDING' })
                 .populate('customer', 'name');
-                
+    
             // Find paid loans and populate customer names
             const paidLoanList = await Loan.find({ status: 'PAID' })
                 .populate('customer', 'name');
@@ -142,7 +141,7 @@ export async function getAllLoansDetails(req, res)
             // Render the loan dashboard page with the loan lists
             return res.render('partials/adminPartials/adminLoanDashboard', 
             {
-                title: "Loan Dashboard",
+                title: "Admin Loan Dashboard",
                 approvedLoanList,
                 pendingLoanList,
                 paidLoanList,
@@ -195,14 +194,17 @@ export async function approveLoan(req, res)
             );
 
             // Check if the loan's status is updated correctly
-            if (updatedLoan && updatedLoan.status === "APPROVED") {
+            if (updatedLoan && updatedLoan.status === "APPROVED") 
+            {
                 // Create a new Payment record based on the loan details
-                const payment = await Payment.create({
+                const payment = await Payment.create(
+                {
                     loan: updatedLoan._id,
                     totalAmount: updatedLoan.amount,
                     remaningAmount: updatedLoan.amount,
                     totalTerm: updatedLoan.term,
-                    remaningTerm: updatedLoan.term, // Use loan's term here
+                    remaningTerm: updatedLoan.term,
+                    nextPayment: (updatedLoan.amount / updatedLoan.term),
                     paymentDate:nextPaymentDate
                 });
 

@@ -26,14 +26,13 @@ const paymentSchema = new Schema(
     },
     remaningTerm:
     {
-        type: Number,
+        type: Number, 
         required: true
     },
-    completedTerm:
+    nextPayment:
     {
         type: Number,
         required: true,
-        default: 0
     },
     status: 
     {

@@ -3,7 +3,7 @@ import { loanPayment} from "../controllers/paymentController.js";
 
 const paymentRouter = Router();
 
-paymentRouter.get('/loan-payment/:id', loanPayment);
+paymentRouter.post('/loan-payment/:paymentId', loanPayment);
 
 
 export default paymentRouter;

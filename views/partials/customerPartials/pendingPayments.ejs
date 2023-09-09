@@ -1,21 +1,44 @@
 <!-- pending payments -->
 <div class="main-content" id="pending-payment">
     <div class="container">
-        <h1>All Pending Payemnt List</h1>
+        <h1>All Pending Payment List</h1>
         <div class="pendingPayment">
-            <% for(let payments of pendingPaymentList){ %> 
+            <% for(let payments of pendingPaymentList) { %> 
                 <div class="pending-payment-list">
                     <p> Customer Name : <%= payments.loan.customer.name %> </p>
                     <p> Loan Amount : <%= payments.totalAmount %> </p>
-                    <p> Remaning Amount : <%= payments.remaningAmount %> </p>
+                    <p> Remaining Amount : <%= payments.remaningAmount %> </p>
                     <p> Total Term : <%= payments.totalTerm %></p>
-                    <p> Remaning Term : <%= payments.remaningTerm %></p>
-                    <p> Complete Term : <%= payments.completeTerm %> </p>
+                    <p> Remaining Term : <%= payments.remaningTerm %></p>
                     <p> Payment Status : <%= payments.status %> </p>
                     <p> Next Payment Date : <%= payments.paymentDate %> </p>
-                    <p><a href="/customer/payments/loan-payment/:id">Pay EMI</a></p>
+                    <p> Next Payment Amount : <%= payments.nextPayment %> </p>
+                    <p>
+                        <form action="/customer/payments/loan-payment/<%=payments.id%>" method="post">
+                            <input type="number" name="payment" id="paymentInput" placeholder="Enter amount >= Next Payment Amount" required min="<%= payments.nextPayment %>" oninput="validateInput(this,` <%= payments.nextPayment %> `, `<%= payments.totalAmount %>`)"><br>
+                            <button type="submit" id="submitButton" disabled>Pay Amount</button>
+                        </form>
+                    </p>
                 </div>    
             <% } %>
         </div>
     </div>            
 </div>
+
+<script>
+    function validateInput(input, minValue, maxValue) 
+    {
+        const inputValue = parseFloat(input.value);
+    
+        const submitButton = document.getElementById('submitButton');
+        
+        if (inputValue >= minValue && inputValue <= maxValue) 
+        {
+            submitButton.disabled = false; // Enable the submit button
+        } 
+        else 
+        {
+            submitButton.disabled = true; // Disable the submit button
+        }
+    }
+</script>

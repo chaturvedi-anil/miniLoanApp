@@ -93,7 +93,7 @@ export function adminDashboard(req, res)
         {
             return res.render('admin_Dashboard',
             {
-                title: "Admin Dashboad",
+                title: "Admin Dashboard",
             });
         }
         else
