@@ -1,6 +1,6 @@
 import Loan from '../models/loan.js';
 import Customer from '../models/customer.js';
-import Repayment from '../models/repayment.js';
+import Payment from '../models/payment.js';
 
 export async function loanDashboard(req, res)
 {
@@ -128,13 +128,29 @@ export async function getAllLoansDetails(req, res)
         return res.status(500).send("Internal Server Error");
     }
 }
-export async function approveLoan(req, res) {
+
+
+function getDate()
+{
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const parsedDate = new Date(formattedDate);
+    const next7thDate = new Date(parsedDate);
+    next7thDate.setDate(parsedDate.getDate() + 7);
+
+    // Extract only the date part as a string
+    const next7thDateString = next7thDate.toISOString().split('T')[0];
+
+    return next7thDateString;
+}
+
+export async function approveLoan(req, res) 
+{
     try {
         // Check if a user is authenticated
-        if (req.user) {
-            // Extract the current date
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString();
+        if (req.user) 
+        {
+            const nextPaymentDate = getDate();
 
             // Find the loan by ID and update its status to 'APPROVED'
             const updatedLoan = await Loan.findByIdAndUpdate(
@@ -145,41 +161,53 @@ export async function approveLoan(req, res) {
 
             // Check if the loan's status is updated correctly
             if (updatedLoan && updatedLoan.status === "APPROVED") {
-                // Create a new repayment record based on the loan details
-                const repayment = await Repayment.create({
+                // Create a new Payment record based on the loan details
+                const payment = await Payment.create({
                     loan: updatedLoan._id,
                     totalAmount: updatedLoan.amount,
-                    remainingTerm: updatedLoan.term, // Use loan's term here
-                    paymentDate: formattedDate
+                    remaningAmount: updatedLoan.amount,
+                    totalTearm: updatedLoan.term,
+                    remaningTerm: updatedLoan.term, // Use loan's term here
+                    completedTerm: 0,
+                    paymentDate:nextPaymentDate
                 });
 
-                // Check if the repayment record is created successfully
-                if (repayment) {
-                    // Push the repayment data to the loan's repayments array
+                // Check if the Payment record is created successfully
+                if (payment) 
+                {
+                    // Push the Payment data to the loan's Payment array
                     await Loan.findByIdAndUpdate(
                         req.params.id,
-                        { $push: { repayments: repayment } },
+                        { $push: { payments: payment } },
                     );
 
                     // Flash a success message and redirect
                     req.flash('success', "Loan Application Approved");
                     return res.redirect('back');
-                } else {
-                    // Handle the case where the repayment record creation failed
-                    req.flash('error', "Failed to create repayment record");
+                } 
+                else 
+                {
+                    // Handle the case where the Payment record creation failed
+                    req.flash('error', "Failed to create Payment record");
                     return res.redirect('back');
                 }
-            } else {
+            } 
+            else 
+            {
                 // Handle the case where the loan status update failed
                 req.flash('error', "Loan status not updated correctly");
                 return res.redirect('back');
             }
-        } else {
+        } 
+        else 
+        {
             // If no user is authenticated, redirect to the admin sign-in page
             req.flash('error', "Please Sign In");
             return res.status(404).redirect('/admin/sign-in');
         }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         // Handle any errors that occur during execution
         console.error('Error in approveLoan controller:', error);
         req.flash('error', "Internal Server Error");
@@ -219,7 +247,9 @@ export async function rejectLoanApplication(req, res)
             req.flash('error', "Please Sign In");
             return res.status(404).redirect('/admin/sign-in');
         }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         // Handle any errors that occur during execution
         console.error('Error in approveLoan controller:', error);
         req.flash('error', "Internal Server Error");

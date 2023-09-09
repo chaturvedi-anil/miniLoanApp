@@ -19,11 +19,11 @@ const loanSchema = new Schema(
         type: Number, 
         required: true 
     },
-    repayments: 
+    payments: 
     [
         { 
             type: Schema.Types.ObjectId, 
-            ref: 'Repayment' 
+            ref: 'Payment' 
         }
     ],
     status: 

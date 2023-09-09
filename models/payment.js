@@ -14,7 +14,17 @@ const repaymentSchema = new Schema(
         type: Number, 
         required: true 
     },
-    remaingTerm:
+    remaningAmount:
+    {
+        type: Number, 
+        required: true
+    },
+    totalTearm:
+    {
+        type: Number, 
+        required: true
+    },
+    remaningTerm:
     {
         type: Number,
         required: true
@@ -23,7 +33,6 @@ const repaymentSchema = new Schema(
     {
         type: Number,
         required: true,
-        default: 0,
     },
     status: 
     {

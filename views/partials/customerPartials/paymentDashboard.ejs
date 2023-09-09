@@ -1,0 +1,30 @@
+<!-- Show Loan History -->
+<div class="main-content" id="loan-dashboard">
+    <div class="container">
+        <h1>All Payement Details</h1>
+        <div class="payment-list">
+            <table class="loan-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Loan Status</th>
+                        <th>Remaing term</th>
+                        <th>completed term</th>
+                        <th>Next Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let paymentList of allPayments) { %>
+                        <tr class="loan-details">
+                            <td><%= paymentList.loans.customer.name %> </td>
+                            <td><%= paymentList.loans.status %> </td>
+                            <td><%= paymentList.remaing %> </td>
+                            <td><%= paymentList.completedTerm%> </td>
+                            <td><%= paymentList.status %> </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>            
+</div>
