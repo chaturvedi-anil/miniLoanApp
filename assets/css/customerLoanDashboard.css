@@ -55,6 +55,14 @@ input {
 {
     display: none;
 }
+#pending-payment
+{
+    display: none;
+}
+#paid-payment
+{
+    display: none;
+}
 
 /* list of loan */
 .container
