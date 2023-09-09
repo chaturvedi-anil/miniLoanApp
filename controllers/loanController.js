@@ -8,7 +8,7 @@ export async function loanDashboard(req, res)
     {
         if(req.params.id)
         {
-            let approvedLoanList = await Loan.find({ customer: req.params.id, status: 'approved' });
+            let approvedLoanList = await Loan.find({ customer: req.params.id, status: 'APPROVED' });
             let allLoanList = await Loan.find({ customer: req.params.id});
             return res.render('partials/customerPartials/customerLoanDashboard',
             {
@@ -175,6 +175,46 @@ export async function approveLoan(req, res) {
                 return res.redirect('back');
             }
         } else {
+            // If no user is authenticated, redirect to the admin sign-in page
+            req.flash('error', "Please Sign In");
+            return res.status(404).redirect('/admin/sign-in');
+        }
+    } catch (error) {
+        // Handle any errors that occur during execution
+        console.error('Error in approveLoan controller:', error);
+        req.flash('error', "Internal Server Error");
+        return res.status(500).redirect('back');
+    }
+}
+
+export async function rejectLoanApplication(req, res)
+{
+    try 
+    {
+        // Check if a user is authenticated
+        if (req.user) 
+        {
+            // Find the loan by ID and update its status to 'REJECT'
+            const updatedLoanStatus = await Loan.findByIdAndUpdate(
+                req.params.id, 
+                { status: 'REJECTED' }, 
+                { new: true }
+            );
+
+            if(updatedLoanStatus)
+            {
+                req.flash('success', "Loan Application Rejected");
+                return res.redirect('back');
+            }
+            else 
+            {
+                // Handle the case where the loan status update failed
+                req.flash('error', "Loan status not updated correctly");
+                return res.redirect('back');
+            }
+        } 
+        else 
+        {
             // If no user is authenticated, redirect to the admin sign-in page
             req.flash('error', "Please Sign In");
             return res.status(404).redirect('/admin/sign-in');

@@ -12,6 +12,7 @@
                         <th>Loan Status</th>
                         <th>Applied Date</th>
                         <th>Approve Loan</th>
+                        <th>Reject Loan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +24,10 @@
                             <td><%= loanList.status %> </td>
                             <td><%= loanList.appliedDate%> </td>
                             <td>
-                                <a class="approve-btn" href="/admin/loans/approve-loan/<%=loanList.id%>">Approve Loan</a>
+                                <a class="action-btn" href="/admin/loans/approve-loan/<%=loanList.id%>">Approve Loan</a>
+                            </td>
+                            <td>
+                                <a class="action-btn" href="/admin/loans/reject-loan/<%=loanList.id%>">Reject Loan</a>
                             </td>
                         </tr>
                     <% } %>

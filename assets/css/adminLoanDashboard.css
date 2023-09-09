@@ -51,12 +51,12 @@
 .loan-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-.approve-btn
+.action-btn
 {
     text-decoration: none;
     padding: 0.2rem;
 }
-.approve-btn:hover
+.action-btn:hover
 {
     cursor: pointer;
     text-decoration: underline;

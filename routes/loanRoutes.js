@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { applyForLoan, loanDashboard, getAllLoansDetails, approveLoan} from '../controllers/loanController.js';
+import { applyForLoan, loanDashboard, getAllLoansDetails, approveLoan, rejectLoanApplication} from '../controllers/loanController.js';
 
 const loanRouter = Router();
 
@@ -10,5 +10,6 @@ loanRouter.post('/loanApplication/:id', applyForLoan);
 // admin access routes
 loanRouter.get('/all-loans/:id', getAllLoansDetails);
 loanRouter.get('/approve-loan/:id', approveLoan);
+loanRouter.get('/reject-loan/:id', rejectLoanApplication);
 
 export default loanRouter;
